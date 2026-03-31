@@ -44,11 +44,27 @@ public class TicketBookingSystem {
                 Movie chosenMovie=MovieManager.movies.get(movieIndex - 1);
                 System.out.println("How many tickets you want to Book..");
                 int noOfTickets=sc.nextInt();
+                
+                // Check if enough tickets are available
+                if (chosenMovie.getAvailableTicketCount() < noOfTickets) {
+                    System.out.println("❌ Not enough tickets available! Only " + chosenMovie.getAvailableTicketCount() + " tickets left.");
+                    continue;
+                }
 
-                Ticket t = new Ticket(chosenMovie.getName(), noOfTickets);
+                // Book the tickets and get seat numbers
+                ArrayList<Integer> bookedSeats = chosenMovie.bookTickets(noOfTickets);
+                
+                // Calculate total amount
+                double totalAmount = chosenMovie.getCost() * noOfTickets;
+                
+                Ticket t = new Ticket(chosenMovie.getName(), noOfTickets, bookedSeats);
                 t.saveToFile();
+                
+                // Display total amount
+                System.out.println("✅ Booking successful!");
+                System.out.println("Your total amount is: Rs." + totalAmount);
 
-            } else if (choice == 2) {
+            }else if (choice == 2) {
                 System.out.println("Thank you! Exiting...");
                 break;
             } else {

@@ -1,0 +1,4 @@
+Date: 2026-03-31, Movie: Charlie777, Tickets: 3
+Date: 2026-03-31, Movie: Charlie777, Tickets: 4
+Date: 2026-03-31, Movie: KantaraCh2, Tickets: 10
+Date: 2026-03-31, Movie: Charlie777, Tickets: 4, Seat Numbers: [1, 2, 3, 4]
