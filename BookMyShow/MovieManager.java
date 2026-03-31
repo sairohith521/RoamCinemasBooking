@@ -9,8 +9,7 @@ import java.util.Iterator;
 public class MovieManager {
 
     static ArrayList<Movie> movies = new ArrayList<>();
-
-    public static void addMovie(String name,int cost,double rating) {
+    public static void addMovie(String name,int cost,double rating) throws Exception {
         Movie m = new Movie(name,cost,rating);
         movies.add(m);
         System.out.println("Movie added successfully!");
@@ -21,7 +20,8 @@ public class MovieManager {
         int index = 1;
         for(Movie movie:MovieManager.movies){
             String movieName=Utils.formatedName(movie.getName());
-            System.out.println(index++ +" : "+movieName+"  ->  "+movie.getCost()+"     "+ movie.getRatings());
+            System.out.printf("%2d : " +movieName+"  ->  "+movie.getCost()+"     "+ movie.getRatings(), index++);
+            System.out.println();
         }
     }
     public static ArrayList<Movie> readMovies() throws Exception {
@@ -71,5 +71,101 @@ public class MovieManager {
 
     // Rewrite file
     writeMovies(list);
+}
+public static void updateMovieSeats(String movieName, ArrayList<Integer> seatNumbers, boolean book) {
+
+        for (Movie m : movies) {
+
+            if (m.getName().equalsIgnoreCase(movieName)) {
+
+                m.updateSeats(seatNumbers, book);
+                System.out.println("Seats updated for " + movieName);
+                return;
+            }
+        }
+
+        System.out.println("Movie not found!");
+    }
+    public static boolean[][] readSeats(String movieName) throws Exception {
+
+    BufferedReader br = new BufferedReader(new FileReader("movies.txt"));
+
+    String line;
+
+    while ((line = br.readLine()) != null) {
+
+        String[] parts = line.split(",");
+
+        if (parts[0].equalsIgnoreCase(movieName)) {
+
+            boolean[][] seats = new boolean[6][10];
+            if (parts.length < 4) {
+                    // No seat data → initialize empty seats
+                     br.close();
+                    return new boolean[6][10];
+                }
+            String[] seatData = parts[3].trim().split(" ");
+
+            int index = 0;
+
+            for (int i = 0; i < 6; i++) {
+                for (int j = 0; j < 10; j++) {
+                    seats[i][j] = seatData[index++].equals("1");
+                }
+            }
+
+            br.close();
+            return seats;
+        }
+    }
+
+    br.close();
+    return null; // movie not found
+}
+public static void updateSeatsInFile(String movieName, boolean[][] seats) throws Exception {
+
+    BufferedReader br = new BufferedReader(new FileReader("movies.txt"));
+    ArrayList<String> lines = new ArrayList<>();
+
+    String line;
+
+    while ((line = br.readLine()) != null) {
+
+        String[] parts = line.split(",");
+
+        if (parts[0].equalsIgnoreCase(movieName)) {
+
+            // rebuild line with updated seats
+            StringBuilder sb = new StringBuilder();
+
+            sb.append(parts[0]).append(",")
+              .append(parts[1]).append(",")
+              .append(parts[2]).append(",");
+
+            // add updated seat data
+            for (int i = 0; i < 6; i++) {
+                for (int j = 0; j < 10; j++) {
+                    sb.append(seats[i][j] ? "1" : "0").append(" ");
+                }
+            }
+
+            lines.add(sb.toString().trim());
+
+        } else {
+            lines.add(line); // keep unchanged
+        }
+    }
+
+    br.close();
+
+    // rewrite file
+    BufferedWriter bw = new BufferedWriter(new FileWriter("movies.txt"));
+
+    for (String l : lines) {
+        bw.write(l);
+        bw.newLine();
+    }
+
+    bw.close();
 }
 }

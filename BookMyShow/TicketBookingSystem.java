@@ -20,8 +20,6 @@ public class TicketBookingSystem {
 
         // Read
         MovieManager.movies = MovieManager.readMovies();
-       
-
         //Printing the list of movies.
         MovieManager.printMovies();
         Scanner sc=new Scanner(System.in);
@@ -42,9 +40,21 @@ public class TicketBookingSystem {
                     continue;
                  }
                 Movie chosenMovie=MovieManager.movies.get(movieIndex - 1);
+                System.out.println("Available Seats: ");
+                chosenMovie.showSeats();
                 System.out.println("How many tickets you want to Book..");
                 int noOfTickets=sc.nextInt();
+                sc.nextLine();
+                System.out.println("Enter seat numbers (space separated):");
 
+               String input = sc.nextLine(); 
+               String[] parts = input.split(" ");
+               ArrayList<Integer> list = new ArrayList<>();
+                for (String p : parts) {
+                    list.add(Integer.parseInt(p));
+                }
+                MovieManager.updateMovieSeats(chosenMovie.getName(),list,true);
+                MovieManager.updateSeatsInFile(chosenMovie.getName(), chosenMovie.getSeats());
                 Ticket t = new Ticket(chosenMovie.getName(), noOfTickets);
                 t.saveToFile();
 

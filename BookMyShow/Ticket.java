@@ -6,6 +6,7 @@ public class Ticket {
     String movieName;
     int numberOfTickets;
     String date;
+    int cost;
 
     Ticket(String movieName, int numberOfTickets) {
         this.movieName = movieName;
