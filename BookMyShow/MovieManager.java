@@ -72,19 +72,27 @@ public class MovieManager {
     // Rewrite file
     writeMovies(list);
 }
-public static void updateMovieSeats(String movieName, ArrayList<Integer> seatNumbers, boolean book) {
+public static Boolean updateMovieSeats(String movieName, ArrayList<Integer> seatNumbers, boolean book) {
 
         for (Movie m : movies) {
 
             if (m.getName().equalsIgnoreCase(movieName)) {
 
-                m.updateSeats(seatNumbers, book);
-                System.out.println("Seats updated for " + movieName);
-                return;
+                Boolean flag=m.updateSeats(seatNumbers, book);
+                if(flag){
+                    System.out.println("Seats updated for " + movieName);
+                    return true;
+                }
+                else {
+                    System.out.println("Booking failed");
+                    return false;
+                }
+                
             }
         }
 
         System.out.println("Movie not found!");
+        return false;
     }
     public static boolean[][] readSeats(String movieName) throws Exception {
 

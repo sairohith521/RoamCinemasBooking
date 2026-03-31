@@ -45,6 +45,14 @@ public class TicketBookingSystem {
                 System.out.println("How many tickets you want to Book..");
                 int noOfTickets=sc.nextInt();
                 sc.nextLine();
+                if(noOfTickets<=0){
+                    System.out.println("Invalid quantity of tickets entered!");
+                    continue;
+                }
+                if(chosenMovie.freeSeatsCount()<noOfTickets ){
+                    System.out.println("only "+chosenMovie.freeSeatsCount()+" seats Available!");
+                    continue;
+                }
                 System.out.println("Enter seat numbers (space separated):");
 
                String input = sc.nextLine(); 
@@ -53,10 +61,18 @@ public class TicketBookingSystem {
                 for (String p : parts) {
                     list.add(Integer.parseInt(p));
                 }
-                MovieManager.updateMovieSeats(chosenMovie.getName(),list,true);
+                if(!MovieManager.updateMovieSeats(chosenMovie.getName(),list,true)){
+                       System.out.println("Invalid Seats Selected!");
+                }
+                else if(list.size() != noOfTickets) {
+                    System.out.println("Please enter exactly " + noOfTickets + " seat numbers!");
+                    continue;
+                }
+                else{
                 MovieManager.updateSeatsInFile(chosenMovie.getName(), chosenMovie.getSeats());
-                Ticket t = new Ticket(chosenMovie.getName(), noOfTickets);
+                Ticket t = new Ticket(chosenMovie.getName(), noOfTickets,chosenMovie.getCost());
                 t.saveToFile();
+                }
 
             } else if (choice == 2) {
                 System.out.println("Thank you! Exiting...");

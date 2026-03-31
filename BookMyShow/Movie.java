@@ -60,36 +60,55 @@ public class Movie {
         System.out.println();
     }
 }
-public void updateSeats(ArrayList<Integer> seatNumbers, boolean book) {
 
+public boolean updateSeats(ArrayList<Integer> seatNumbers, boolean book) {
+
+    // Step 1: Validate ALL first
     for (int seat : seatNumbers) {
 
         int row = (seat - 1) / 10;
         int col = (seat - 1) % 10;
 
-        // Validation
         if (row < 0 || row >= 6 || col < 0 || col >= 10) {
             System.out.println("Invalid seat: " + seat);
-            continue;
+            return false;
         }
 
-        if (book) {
-            // Booking
-            if (seats[row][col]) {
-                System.out.println("Already booked: " + seat);
-            } else {
-                seats[row][col] = true;
-                System.out.println("Booked: " + seat);
-            }
-        } else {
-            // Cancel
-            if (!seats[row][col]) {
-                System.out.println("Already empty: " + seat);
-            } else {
-                seats[row][col] = false;
-                System.out.println("Cancelled: " + seat);
+        if (book && seats[row][col]) {
+            System.out.println("Already booked: " + seat);
+            System.out.println("Enter available seats to confirm booking");
+            return false;
+        }
+
+        if (!book && !seats[row][col]) {
+            System.out.println("Already empty: " + seat);
+            return false;
+        }
+    }
+
+    // Step 2: Apply changes ONLY if all valid
+    for (int seat : seatNumbers) {
+
+        int row = (seat - 1) / 10;
+        int col = (seat - 1) % 10;
+
+        seats[row][col] = book;
+    }
+
+    return true;
+}
+public int freeSeatsCount(){
+ int count = 0;
+
+    for (int i = 0; i < 6; i++) {
+        for (int j = 0; j < 10; j++) {
+
+            if (!seats[i][j]) {
+                count++;
             }
         }
     }
+
+    return count;
 }
 }
