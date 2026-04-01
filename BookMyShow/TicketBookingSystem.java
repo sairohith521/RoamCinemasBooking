@@ -20,8 +20,6 @@ public class TicketBookingSystem {
 
         // Read
         MovieManager.movies = MovieManager.readMovies();
-       
-
         //Printing the list of movies.
         MovieManager.printMovies();
         Scanner sc=new Scanner(System.in);
@@ -42,27 +40,39 @@ public class TicketBookingSystem {
                     continue;
                  }
                 Movie chosenMovie=MovieManager.movies.get(movieIndex - 1);
+                System.out.println("Available Seats: ");
+                chosenMovie.showSeats();
                 System.out.println("How many tickets you want to Book..");
                 int noOfTickets=sc.nextInt();
-                
-                // Check if enough tickets are available
-                if (chosenMovie.getAvailableTicketCount() < noOfTickets) {
-                    System.out.println("❌ Not enough tickets available! Only " + chosenMovie.getAvailableTicketCount() + " tickets left.");
+                sc.nextLine();
+                if(noOfTickets<=0){
+                    System.out.println("Invalid quantity of tickets entered!");
                     continue;
                 }
+                if(chosenMovie.freeSeatsCount()<noOfTickets ){
+                    System.out.println("only "+chosenMovie.freeSeatsCount()+" seats Available!");
+                    continue;
+                }
+                System.out.println("Enter seat numbers (space separated):");
 
-                // Book the tickets and get seat numbers
-                ArrayList<Integer> bookedSeats = chosenMovie.bookTickets(noOfTickets);
-                
-                // Calculate total amount
-                double totalAmount = chosenMovie.getCost() * noOfTickets;
-                
-                Ticket t = new Ticket(chosenMovie.getName(), noOfTickets, bookedSeats);
+               String input = sc.nextLine(); 
+               String[] parts = input.split(" ");
+               ArrayList<Integer> list = new ArrayList<>();
+                for (String p : parts) {
+                    list.add(Integer.parseInt(p));
+                }
+                if(!MovieManager.updateMovieSeats(chosenMovie.getName(),list,true)){
+                       System.out.println("Invalid Seats Selected!");
+                }
+                else if(list.size() != noOfTickets) {
+                    System.out.println("Please enter exactly " + noOfTickets + " seat numbers!");
+                    continue;
+                }
+                else{
+                MovieManager.updateSeatsInFile(chosenMovie.getName(), chosenMovie.getSeats());
+                Ticket t = new Ticket(chosenMovie.getName(), noOfTickets,chosenMovie.getCost());
                 t.saveToFile();
-                
-                // Display total amount
-                System.out.println("✅ Booking successful!");
-                System.out.println("Your total amount is: Rs." + totalAmount);
+                }
 
             }else if (choice == 2) {
                 System.out.println("Thank you! Exiting...");
