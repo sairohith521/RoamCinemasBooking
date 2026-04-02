@@ -111,4 +111,7 @@ public int freeSeatsCount(){
 
     return count;
 }
+public Boolean audiIsEmpty(){
+ return freeSeatsCount()==60;
+}
 }

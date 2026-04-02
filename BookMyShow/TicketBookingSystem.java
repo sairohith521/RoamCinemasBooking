@@ -25,8 +25,9 @@ public class TicketBookingSystem {
         Scanner sc=new Scanner(System.in);
         while (true) {
             System.out.println("1. Book Ticket");
-            System.out.println("2. End Of Day");
-            System.out.println("3. Exit");
+            System.out.println("2. Modify Movie");
+            System.out.println("3. End of Day");
+            System.out.println("4. Exit");
             System.out.print("Enter your choice: ");
 
             int choice = sc.nextInt();
@@ -71,13 +72,41 @@ public class TicketBookingSystem {
                 }
                 else{
                 MovieManager.updateSeatsInFile(chosenMovie.getName(), chosenMovie.getSeats());
-                Ticket t = new Ticket(chosenMovie.getName(), noOfTickets,chosenMovie.getCost(), list);
+                Ticket t = new Ticket(chosenMovie.getName(), noOfTickets,chosenMovie.getCost(),list);
                 t.saveToFile();
                 }
 
-            }else if (choice == 2) {
-                MovieManager.endOfDay();
-            }else if (choice == 3) {
+            }else if(choice==2){
+            MovieManager.printMovies();
+            System.out.println("Select the Serial number of the Movie you want to modify!");
+            int movieIndex=sc.nextInt();
+             //Checking validity.
+                if(movieIndex<1 ||movieIndex>MovieManager.movies.size()){
+                    System.out.println("Movie not available");
+                    continue;
+                 }
+            Movie chosenMovie=MovieManager.movies.get(movieIndex - 1);
+            if(chosenMovie.audiIsEmpty()){
+            System.out.println("Enter movie name, cost, rating (space separated):");
+            String name = sc.next(); 
+            int cost = sc.nextInt();
+            double rating = sc.nextDouble();
+            Movie newMovie=new Movie(name, cost, rating);
+            MovieManager.modifyMovie(movieIndex-1,newMovie);
+            MovieManager.printMovies();
+            }
+            else{
+                System.out.println("Screen is  occupied by "+chosenMovie.getName()+" movie. Please try tomorrow.");
+            }
+
+
+            }else if(choice==3){
+              MovieManager.endOfDay();
+
+       //priyam code .......
+
+
+            }else if (choice == 4) {
                 System.out.println("Thank you! Exiting...");
                 break;
             } else {
