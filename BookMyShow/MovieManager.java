@@ -16,7 +16,8 @@ public class MovieManager {
         movies.add(m);
         System.out.println("Movie added successfully!");
     }
-    public static void printMovies(){
+    public static void printMovies() throws Exception{
+        movies=MovieManager.readMovies();
         System.out.println("       Movie   "+"          Cost  "+"  Ratings");
         System.out.println("    ---------- "+"          ----  "+"  -------");
         int index = 1;
@@ -34,7 +35,7 @@ public class MovieManager {
 
         while ((line = br.readLine()) != null) {
             String[] p = line.split(",");
-
+            if (line.trim().isEmpty()) continue;
             String name = p[0];
             int cost = Integer.parseInt(p[1]);
             double rating = Double.parseDouble(p[2]);
@@ -55,7 +56,7 @@ public class MovieManager {
 
                       bw.close();
     }
-    public static void deleteMovie(String movieName) throws Exception {
+      public static void deleteMovie(String movieName) throws Exception {
 
     //  Read all movies
     ArrayList<Movie> list = readMovies();
@@ -240,5 +241,51 @@ public static void endOfDay() throws Exception {
     }
 
     System.out.println("Tickets and seat bookings reset for next day.");
+}
+public static void modifyMovie(int index, Movie newMovie) throws Exception {
+
+    ArrayList<String> lines = new ArrayList<>();
+
+    //  Read all lines
+    BufferedReader br = new BufferedReader(new FileReader("movies.txt"));
+    String line;
+
+    while ((line = br.readLine()) != null) {
+        if (line.trim().isEmpty()) continue;
+        lines.add(line);
+    }
+    br.close();
+
+    //  Validate index
+    if (index < 0 || index >= lines.size()) {
+        System.out.println("Invalid movie index");
+        return;
+    }
+
+    //  Create new movie line (with seats)
+    StringBuilder seats = new StringBuilder();
+    for (int i = 0; i < 60; i++) {
+        seats.append("0 ");
+    }
+
+    String newLine = newMovie.getName() + "," +
+                     newMovie.getCost() + "," +
+                     newMovie.getRatings() + "," +
+                     seats.toString().trim();
+
+    //  Replace line at index
+    lines.set(index, newLine);
+
+    //  Write back (overwrite file)
+    BufferedWriter bw = new BufferedWriter(new FileWriter("movies.txt"));
+
+    for (String l : lines) {
+        bw.write(l);
+        bw.newLine();
+    }
+
+    bw.close();
+
+    System.out.println("Movie updated successfully!");
 }
 }
