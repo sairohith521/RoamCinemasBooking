@@ -82,7 +82,7 @@ public class TicketBookingSystem {
 
                 String details = "Movie: " + chosenMovie.getName() +
                  "\nSeats: " + seats +
-                 "\nDate: " + time;
+                 "\nDate: " + Date;
                 EmailService.sendEmail(email, details);
                 }
 
