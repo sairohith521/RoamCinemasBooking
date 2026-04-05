@@ -1,4 +1,5 @@
 package BookMyShow;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 public class TicketBookingSystem {
@@ -71,9 +72,18 @@ public class TicketBookingSystem {
                     continue;
                 }
                 else{
+                  System.out.print("Enter your email: ");
+                  String email = sc.nextLine();
                 MovieManager.updateSeatsInFile(chosenMovie.getName(), chosenMovie.getSeats());
                 Ticket t = new Ticket(chosenMovie.getName(), noOfTickets,chosenMovie.getCost(),list);
                 t.saveToFile();
+                String seats = "A1, A2";
+                String Date = LocalDate.now().toString();
+
+                String details = "Movie: " + chosenMovie.getName() +
+                 "\nSeats: " + seats +
+                 "\nDate: " + Date;
+                EmailService.sendEmail(email, details);
                 }
 
             }else if(choice==2){
