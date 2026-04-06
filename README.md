@@ -57,3 +57,10 @@ java BookMyShow.TicketBookingSystem
 ```powershell
 Get-ChildItem -Recurse -Filter *.class | Remove-Item -Force
 ```
+
+## Updates - April 6, 2026
+- Fixed ticket confirmation email details to include:
+  - actual selected seat numbers (instead of hardcoded values)
+  - booking time
+
+
