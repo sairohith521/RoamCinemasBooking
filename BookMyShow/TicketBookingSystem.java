@@ -1,5 +1,7 @@
 package BookMyShow;
 import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 public class TicketBookingSystem {
@@ -77,12 +79,14 @@ public class TicketBookingSystem {
                 MovieManager.updateSeatsInFile(chosenMovie.getName(), chosenMovie.getSeats());
                 Ticket t = new Ticket(chosenMovie.getName(), noOfTickets,chosenMovie.getCost(),list);
                 t.saveToFile();
-                String seats = "A1, A2";
+                String seats = list.toString();
                 String Date = LocalDate.now().toString();
+                String time = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 
                 String details = "Movie: " + chosenMovie.getName() +
                  "\nSeats: " + seats +
-                 "\nDate: " + Date;
+                 "\nDate: " + Date +
+                 "\nTime: " + time;
                 EmailService.sendEmail(email, details);
                 }
 

@@ -1,0 +1,1 @@
+Date: 2026-04-06, Movie: Avengers, Tickets: 3, Seat Numbers: [1, 2, 3], Total Cost: 600
