@@ -8,11 +8,14 @@ A simple Java console-based movie ticket booking system.
 - Book tickets by selecting seat numbers
 - Prevent booking already occupied seats
 - Save bookings to `tickets.txt` with:
+  - user id
   - date
   - movie name
   - ticket count
   - seat numbers
   - total cost
+- Store users in `users.txt` as key-value pairs (`email=userId`)
+- Show all tickets for a user by entering User ID
 - End-of-day summary:
   - total tickets sold per movie
   - total collection per movie
@@ -47,8 +50,9 @@ java BookMyShow.TicketBookingSystem
 
 1. Book Ticket  
 2. Modify Movie  
-3. End of Day  
-4. Exit
+3. Show Your Tickets  
+4. End of Day  
+5. Exit
 
 ## Notes
 

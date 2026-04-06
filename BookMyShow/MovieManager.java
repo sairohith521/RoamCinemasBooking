@@ -288,4 +288,24 @@ public static void modifyMovie(int index, Movie newMovie) throws Exception {
 
     System.out.println("Movie updated successfully!");
 }
+
+public static void showTicketsByUser(String userId) throws Exception {
+    BufferedReader br = new BufferedReader(new FileReader("tickets.txt"));
+    String line;
+    boolean found = false;
+
+    System.out.println("--------------- Your Tickets ---------------");
+    while ((line = br.readLine()) != null) {
+        if (line.startsWith("User ID: " + userId + ",")) {
+            System.out.println(line);
+            found = true;
+        }
+    }
+    br.close();
+
+    if (!found) {
+        System.out.println("No tickets found for User ID: " + userId);
+    }
+    System.out.println("--------------------------------------------");
+}
 }

@@ -23,14 +23,15 @@ public class TicketBookingSystem {
 
         // Read
         MovieManager.movies = MovieManager.readMovies();
-        //Printing the list of movies.
+        // Print movie list initially.
         MovieManager.printMovies();
         Scanner sc=new Scanner(System.in);
         while (true) {
             System.out.println("1. Book Ticket");
             System.out.println("2. Modify Movie");
-            System.out.println("3. End of Day");
-            System.out.println("4. Exit");
+            System.out.println("3. Show Your Tickets");
+            System.out.println("4. End of Day");
+            System.out.println("5. Exit");
             System.out.print("Enter your choice: ");
 
             int choice = sc.nextInt();
@@ -76,18 +77,22 @@ public class TicketBookingSystem {
                 else{
                   System.out.print("Enter your email: ");
                   String email = sc.nextLine();
+                  String userId = User.getOrCreateUserId(email);
+                  System.out.println("Your User ID: " + userId);
                 MovieManager.updateSeatsInFile(chosenMovie.getName(), chosenMovie.getSeats());
-                Ticket t = new Ticket(chosenMovie.getName(), noOfTickets,chosenMovie.getCost(),list);
+                Ticket t = new Ticket(userId, chosenMovie.getName(), noOfTickets,chosenMovie.getCost(),list);
                 t.saveToFile();
                 String seats = list.toString();
                 String Date = LocalDate.now().toString();
                 String time = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
 
-                String details = "Movie: " + chosenMovie.getName() +
+                String details = "User ID: " + userId +
+                 "\nMovie: " + chosenMovie.getName() +
                  "\nSeats: " + seats +
                  "\nDate: " + Date +
                  "\nTime: " + time;
                 EmailService.sendEmail(email, details);
+                MovieManager.printMovies();
                 }
 
             }else if(choice==2){
@@ -115,12 +120,16 @@ public class TicketBookingSystem {
 
 
             }else if(choice==3){
+              System.out.print("Enter your User ID: ");
+              String userId = sc.nextLine();
+              MovieManager.showTicketsByUser(userId);
+            }else if(choice==4){
               MovieManager.endOfDay();
 
-       //priyam code .......
+        //priyam code .......
 
 
-            }else if (choice == 4) {
+            }else if (choice == 5) {
                 System.out.println("Thank you! Exiting...");
                 break;
             } else {

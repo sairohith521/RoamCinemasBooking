@@ -1,1 +1,7 @@
 Date: 2026-04-06, Movie: Avengers, Tickets: 3, Seat Numbers: [1, 2, 3], Total Cost: 600
+Date: 2026-04-06, Movie: Interstellar, Tickets: 3, Seat Numbers: [1, 2, 3], Total Cost: 750
+Date: 2026-04-06, Movie: Avengers, Tickets: 1, Seat Numbers: [4], Total Cost: 200
+Date: 2026-04-06, Movie: Interstellar, Tickets: 1, Seat Numbers: [4], Total Cost: 250
+User ID: U1001, Date: 2026-04-06, Movie: Interstellar, Tickets: 2, Seat Numbers: [5, 6], Total Cost: 500
+User ID: U1001, Date: 2026-04-06, Movie: Charlie777, Tickets: 2, Seat Numbers: [1, 2], Total Cost: 1000
+User ID: U1002, Date: 2026-04-06, Movie: Avengers, Tickets: 2, Seat Numbers: [5, 6], Total Cost: 400

@@ -4,13 +4,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Ticket {
+    String userId;
     String movieName;
     int numberOfTickets;
     String date;
     int cost;
     ArrayList<Integer> seatNumbers;
 
-    Ticket(String movieName, int numberOfTickets,int cost, ArrayList<Integer> seatNumbers) {
+    Ticket(String userId, String movieName, int numberOfTickets,int cost, ArrayList<Integer> seatNumbers) {
+        this.userId = userId;
         this.movieName = movieName;
         this.numberOfTickets = numberOfTickets;
         this.date = LocalDate.now().toString();
@@ -21,7 +23,7 @@ public class Ticket {
     public void saveToFile() {
         try {
             FileWriter fw = new FileWriter("tickets.txt", true);
-            fw.write("Date: " + date + ", Movie: " + movieName + ", Tickets: " + numberOfTickets + ", Seat Numbers: " + seatNumbers + ", Total Cost: " + cost*numberOfTickets + "\n");
+            fw.write("User ID: " + userId + ", Date: " + date + ", Movie: " + movieName + ", Tickets: " + numberOfTickets + ", Seat Numbers: " + seatNumbers + ", Total Cost: " + cost*numberOfTickets + "\n");
             fw.close();
             System.out.println();
             System.out.println(" Ticket saved successfully!");

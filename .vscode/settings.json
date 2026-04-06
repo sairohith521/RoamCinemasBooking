@@ -1,9 +1,0 @@
-{
-    "java.project.sourcePaths": [
-        "."
-    ],
-    "java.project.referencedLibraries": [
-        "BookMyShow\\lib\\jakarta.activation-2.0.1.jar",
-        "BookMyShow\\lib\\jakarta.mail-2.0.1.jar"
-    ]
-}
