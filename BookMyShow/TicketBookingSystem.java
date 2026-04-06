@@ -117,9 +117,6 @@ public class TicketBookingSystem {
             }else if(choice==3){
               MovieManager.endOfDay();
 
-       //priyam code .......
-
-
             }else if (choice == 4) {
                 System.out.println("Thank you! Exiting...");
                 break;

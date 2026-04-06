@@ -1,0 +1,79 @@
+# =========================
+# 🔹 Compiled files
+# =========================
+*.class
+*.log
+
+# =========================
+# 🔹 Java archives
+# =========================
+*.jar
+*.war
+*.ear
+
+# =========================
+# 🔹 Build folders
+# =========================
+target/
+build/
+out/
+
+# =========================
+# 🔹 Dependency folders
+# =========================
+lib/
+
+# =========================
+# 🔹 IDE files
+# =========================
+
+# VS Code
+.vscode/
+
+# IntelliJ
+.idea/
+*.iml
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# =========================
+# 🔹 OS generated files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# 🔹 Temporary files
+# =========================
+*.tmp
+*.swp
+*.bak
+
+# =========================
+# 🔹 Environment files
+# =========================
+.env
+
+# =========================
+# 🔹 Logs & debug
+# =========================
+logs/
+*.log
+
+# =========================
+# 🔹 Node (if frontend added later)
+# =========================
+node_modules/
+
+# =========================
+# 🔹 Maven / Gradle (optional)
+# =========================
+.mvn/
+.gradle/
+
+# Keep wrapper (important)
+!gradlew
+!gradlew.bat
